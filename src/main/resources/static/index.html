@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello WS</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <!--script src="/scripts.js"></script-->
+</head>
+<body>
+    <div class="container" style="margin-top: 50px">
+        <div class="row" style="margin-top: 10px">
+            <div class="col-md-12">
+                <label for="deviceId">Device ID:</label>
+				<input type="text" id="deviceId">
+				<button onclick="connect()">Connect</button>
+				<button onclick="disconnect()">Disconnect</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="message-history" class="table table-striped">
+                    <tbody id="messages"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+	<script>
+	
+		let socket;
+		let stompClient;
+		let deviceId;
+			
+		function connect() {
+			deviceId = document.getElementById("deviceId").value;
+			socket = new SockJS('/our-websocket?deviceId=' + deviceId);
+			stompClient = Stomp.over(socket);
+			stompClient.connect({}, function (frame) {
+				console.log('Connected: ' + frame);
+				stompClient.subscribe('/user/topic/private-messages', function (message) {
+					showMessage(JSON.parse(message.body).content);
+				});
+			});
+		}
+		
+		function showMessage(message) {
+			$("#messages").append("<tr><td>" + message + "</td></tr>");
+		}
+		
+	</script>
+
+
+</body>
+</html>
