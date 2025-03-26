@@ -9,6 +9,7 @@ import org.springframework.web.socket.config.annotation.WebSocketTransportRegist
 
 @Configuration
 @EnableWebSocketMessageBroker
+//@EnableWebSocket
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	
@@ -22,6 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
         registry.addEndpoint("/our-websocket")
                 .setHandshakeHandler(new UserHandshakeHandler())
+                .addInterceptors(new DeviceIdHandshakeInterceptor())
                 .withSockJS();
     }
     
@@ -29,4 +31,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureWebSocketTransport(final WebSocketTransportRegistration registration) {
         registration.addDecoratorFactory((handler) -> new MyWebSocketHandlerDecorator(handler));
     }
+
+//	@Override
+//	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+//		registry.addHandler(customWebSocketHandler(), "/our-websocket")
+//		.setAllowedOrigins("*");
+//		
+//	}
+//
+//	private WebSocketHandler customWebSocketHandler() {
+//		// TODO Auto-generated method stub
+//		return new CustomWebSocketHandler();
+//	}
 }

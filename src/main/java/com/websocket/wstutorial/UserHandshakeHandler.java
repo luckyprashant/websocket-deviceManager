@@ -21,11 +21,8 @@ public class UserHandshakeHandler extends DefaultHandshakeHandler {
 
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-        final String randomId = UUID.randomUUID().toString();
-        
-        LOG.info("User with ID '{}' opened the page", randomId);
-        
         String deviceId = request.getURI().getQuery().split("=")[1];
+        LOG.info("User with ID '{}' opened the page", deviceId);
         deviceCache.put(deviceId, deviceId);
 
         return new UserPrincipal(deviceId);
