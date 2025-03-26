@@ -9,10 +9,8 @@ import org.springframework.web.socket.config.annotation.WebSocketTransportRegist
 
 @Configuration
 @EnableWebSocketMessageBroker
-//@EnableWebSocket
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-	
     @Override
     public void configureMessageBroker(final MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/topic");
@@ -32,15 +30,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registration.addDecoratorFactory((handler) -> new MyWebSocketHandlerDecorator(handler));
     }
 
-//	@Override
-//	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-//		registry.addHandler(customWebSocketHandler(), "/our-websocket")
-//		.setAllowedOrigins("*");
-//		
-//	}
-//
-//	private WebSocketHandler customWebSocketHandler() {
-//		// TODO Auto-generated method stub
-//		return new CustomWebSocketHandler();
-//	}
 }
