@@ -14,15 +14,14 @@ import com.websocket.wstutorial.dto.Message;
 import com.websocket.wstutorial.dto.ResponseMessage;
 
 @RestController
-public class WSController {	
+public class GateSitaController {	
 
     @Autowired
-    private WSService service;
+    private GateControlService service;
 
 
-    @PostMapping("/send-private-message")
+    @PostMapping("/action")
     public ResponseMessage sendPrivateMessage(@RequestBody final Message message) throws InterruptedException, ExecutionException, TimeoutException {
-//        service.notifyUser(id, message.getMessageContent());
         
         CompletableFuture<Message> future = service.sendMessage(message);
 

@@ -8,11 +8,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 
 
-public class MyWebSocketHandlerDecorator extends WebSocketHandlerDecorator {
+public class WebSocketConnectionLostHandlerDecorator extends WebSocketHandlerDecorator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MyWebSocketHandlerDecorator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(WebSocketConnectionLostHandlerDecorator.class);
 
-    public MyWebSocketHandlerDecorator(WebSocketHandler delegate) {
+    public WebSocketConnectionLostHandlerDecorator(WebSocketHandler delegate) {
         super(delegate);
     }
 
@@ -20,6 +20,7 @@ public class MyWebSocketHandlerDecorator extends WebSocketHandlerDecorator {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
     	String deviceId = session.getPrincipal().getName();
         UserHandshakeHandler.removeDeviceFromCache(deviceId);
+        LOG.info("Device '{}' disconnected and removed from cache", deviceId);
         super.afterConnectionClosed(session, closeStatus);
     }
 }

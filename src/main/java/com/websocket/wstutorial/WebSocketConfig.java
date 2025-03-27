@@ -19,15 +19,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
-        registry.addEndpoint("/our-websocket")
+        registry.addEndpoint("/register-device")
                 .setHandshakeHandler(new UserHandshakeHandler())
-                .addInterceptors(new DeviceIdHandshakeInterceptor())
                 .withSockJS();
     }
     
     @Override
     public void configureWebSocketTransport(final WebSocketTransportRegistration registration) {
-        registration.addDecoratorFactory((handler) -> new MyWebSocketHandlerDecorator(handler));
+        registration.addDecoratorFactory((handler) -> new WebSocketConnectionLostHandlerDecorator(handler));
     }
 
 }

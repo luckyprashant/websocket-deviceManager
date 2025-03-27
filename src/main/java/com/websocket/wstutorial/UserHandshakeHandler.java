@@ -2,7 +2,6 @@ package com.websocket.wstutorial;
 
 import java.security.Principal;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
@@ -22,7 +21,7 @@ public class UserHandshakeHandler extends DefaultHandshakeHandler {
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
         String deviceId = request.getURI().getQuery().split("=")[1];
-        LOG.info("User with ID '{}' opened the page", deviceId);
+        LOG.info("Device with ID '{}' opened connected!!", deviceId);
         deviceCache.put(deviceId, deviceId);
 
         return new UserPrincipal(deviceId);
@@ -30,7 +29,6 @@ public class UserHandshakeHandler extends DefaultHandshakeHandler {
     
     public static void removeDeviceFromCache(String deviceId) {
         deviceCache.remove(deviceId);
-        LOG.info("Device '{}' disconnected and removed from cache", deviceId);
     }
 
 }

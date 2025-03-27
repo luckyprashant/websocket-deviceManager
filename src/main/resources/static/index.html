@@ -13,20 +13,24 @@
     <div class="container" style="margin-top: 50px">
         <div class="row" style="margin-top: 10px">
             <div class="col-md-12">
-                <label for="deviceId">Device ID:</label>
-				<input type="text" id="deviceId">
-				<button onclick="connect()">Connect</button>
-				<button onclick="disconnect()">Disconnect</button>
+				<form class="form-inline">
+                    <div class="form-group">
+                        <label for="deviceId">Device ID:</label>
+                        <input type="text" id="deviceId" class="form-control" placeholder="Enter your device id here...">
+                    </div>
+					<button id="connect-me" class="btn btn-default" type="button" onclick="connect()">Connect</button>
+					<button id="disconnect-me" class="btn btn-default" type="button" onclick="disconnect()">Disconnect</button>
+                </form>
             </div>
         </div>
-		<div class="row" style="margin-top: 10px">
+		<div class="row" style="margin: 10px">
             <div class="col-md-12">
                 <form class="form-inline">
                     <div class="form-group">
-                        <label for="private-message">Private Message</label>
+                        <label for="private-message">Response</label>
                         <input type="text" id="private-message" class="form-control" placeholder="Enter your message here...">
                     </div>
-                    <button id="send-private" class="btn btn-default" type="button" onclick="sendMessage()">Send Private Message</button>
+                    <button id="send-private" class="btn btn-default" type="button" onclick="sendMessage()">Add response from device here...</button>
                 </form>
             </div>
         </div>
@@ -47,11 +51,11 @@
 			
 		function connect() {
 			deviceId = document.getElementById("deviceId").value;
-			socket = new SockJS('/our-websocket?deviceId=' + deviceId);
+			socket = new SockJS('/register-device?deviceId=' + deviceId);
 			stompClient = Stomp.over(socket);
 			stompClient.connect({}, function (frame) {
 				console.log('Connected: ' + frame);
-				stompClient.subscribe('/user/topic/private-messages', function (message) {
+				stompClient.subscribe('/user/topic/sita-device', function (message) {
 					showMessage(JSON.parse(message.body).messageContent);
 				});
 			});
@@ -64,7 +68,7 @@
 		
 		function sendMessage() {
             console.log("sending private message");
-			stompClient.send("/ws/private-message", {}, JSON.stringify({'messageContent': $("#private-message").val(), 'deviceId': $("#deviceId").val()}));
+			stompClient.send("/ws/action-response", {}, JSON.stringify({'messageContent': $("#private-message").val(), 'deviceId': $("#deviceId").val()}));
         }
 		
 	</script>
