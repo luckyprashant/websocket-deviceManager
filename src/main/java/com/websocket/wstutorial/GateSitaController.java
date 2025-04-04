@@ -29,6 +29,5 @@ public class GateSitaController {
         Message response = future.get(30, TimeUnit.SECONDS); // Wait for response with a timeout
 
         return new ResponseMessage("Response received: " + response.getMessageContent());
- 
     }
 }

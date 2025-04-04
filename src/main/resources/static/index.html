@@ -68,7 +68,7 @@
 		
 		function sendMessage() {
             console.log("sending private message");
-			stompClient.send("/ws/action-response", {}, JSON.stringify({'messageContent': $("#private-message").val(), 'deviceId': $("#deviceId").val()}));
+			stompClient.send("/ws/device-message", {}, JSON.stringify({'messageContent': $("#private-message").val(), 'deviceId': $("#deviceId").val()}));
         }
 		
 	</script>

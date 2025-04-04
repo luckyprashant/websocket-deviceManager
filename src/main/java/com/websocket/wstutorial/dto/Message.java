@@ -6,7 +6,18 @@ public class Message {
     private String deviceId;
     
     
-    public String getDeviceId() {
+    
+    public Message() {
+		super();
+	}
+
+	public Message(String messageContent, String deviceId) {
+		super();
+		this.messageContent = messageContent;
+		this.deviceId = deviceId;
+	}
+
+	public String getDeviceId() {
 		return deviceId;
 	}
 
