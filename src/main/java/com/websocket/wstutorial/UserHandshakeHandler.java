@@ -23,7 +23,6 @@ public class UserHandshakeHandler extends DefaultHandshakeHandler {
         String deviceId = request.getURI().getQuery().split("=")[1];
         LOG.info("Device with ID '{}' opened connected!!", deviceId);
         deviceCache.put(deviceId, deviceId);
-
         return new UserPrincipal(deviceId);
     }
     

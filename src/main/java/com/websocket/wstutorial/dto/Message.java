@@ -5,16 +5,18 @@ public class Message {
 
     private String deviceId;
     
+    private String correlationId;
     
     
     public Message() {
 		super();
 	}
 
-	public Message(String messageContent, String deviceId) {
+	public Message(String messageContent, String deviceId, String correlationId) {
 		super();
 		this.messageContent = messageContent;
 		this.deviceId = deviceId;
+		this.correlationId = correlationId;
 	}
 
 	public String getDeviceId() {
@@ -36,6 +38,14 @@ public class Message {
 	@Override
 	public String toString() {
 		return "Message [messageContent=" + messageContent + ", deviceId=" + deviceId + "]";
+	}
+
+	public String getCorrelationId() {
+		return correlationId;
+	}
+
+	public void setCorrelationId(String correlationId) {
+		this.correlationId = correlationId;
 	}
     
     
